@@ -12,7 +12,9 @@ class PhoneController extends Controller
 {
     public function index()
     {
-        $phones = Phone::query()->paginate(6);
+        $phones = Phone::query()
+            ->where('user_id' , auth()->id())
+            ->paginate(6);
         $tasks = Task::query()->get();
         return view('phones.index', compact('phones','tasks'));
     }

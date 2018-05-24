@@ -225,7 +225,7 @@
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="{{route('profile.index')}}"><i class="ti-user"></i> Мой профиль</a></li>
-                                <li><a href="{{route('logoutd')}}"><i class="fa fa-power-off"></i> Выход</a></li>
+                                <li><a href="{{route('logout')}}"><i class="fa fa-power-off"></i> Выход</a></li>
                             </ul>
                         </div>
                     </li>
@@ -252,7 +252,7 @@
                                              role="button" aria-haspopup="true" aria-expanded="true">{{Auth::user()->name}}</a>
                     <div class="dropdown-menu animated flipInY">
                         <a href="{{route('profile.index')}}" class="dropdown-item"><i class="ti-user"></i> Мой профиль</a>
-                        <a href="{{route('logoutd')}}" class="dropdown-item"><i class="fa fa-power-off"></i> Выход</a>
+                        <a href="{{route('logout')}}" class="dropdown-item"><i class="fa fa-power-off"></i> Выход</a>
                     </div>
                 </div>
             </div>
@@ -269,6 +269,7 @@
                             <li><a href="index2.html">Выселение</a></li>
                             <li><a href="index3.html">Переселение</a></li>
                             <li><a href="{{route('history')}}">История</a></li>
+                            <li><a href="{{route('places.index')}}">Комнаты</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i

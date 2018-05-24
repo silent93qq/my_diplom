@@ -1,11 +1,14 @@
 <?php
 
-Route::get('/', function () {return view('layouts.app');});
+Route::get('/', function () {
+    $tasks = \App\Task::query()->get();
+    return view('layouts.app',compact('tasks'));});
 
-Route::get('/logind','LoginController@index')->name('logind');
-Route::post('/logind', 'LoginController@login');
 
-Route::get('/logoutd','LogoutController@out')->name('logoutd');
+Route::get('/login','LoginController@index')->name('login');
+Route::post('/login', 'LoginController@login');
+
+Route::get('/logout','LogoutController@out')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -20,3 +23,5 @@ Route::post('/profile', "ProfileController@updateAva");
 Route::get('history','HistoryStudentController@index')->name('history');
 
 Route::resource('tasks', 'TaskController');
+
+Route::resource('places','PlaceController');

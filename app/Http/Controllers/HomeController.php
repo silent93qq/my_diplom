@@ -24,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(!auth()->check())
+        {
+            return view('auth.login');
+        }
         $tasks = Task::query()->get();
         return view('layouts.app',compact('tasks'));
     }

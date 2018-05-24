@@ -8,6 +8,6 @@ class LogoutController extends Controller
 {
     public function out(){
         auth()->logout();
-        return view('auth.loginDip');
+        return view('auth.login');
     }
 }
