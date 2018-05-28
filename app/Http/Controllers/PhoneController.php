@@ -13,7 +13,7 @@ class PhoneController extends Controller
     public function index()
     {
         $phones = Phone::query()
-            ->where('user_id' , auth()->id())
+            ->where('dormitory_number' , auth()->user()->dormitory_number)
             ->paginate(6);
         $tasks = Task::query()->get();
         return view('phones.index', compact('phones','tasks'));
@@ -22,7 +22,7 @@ class PhoneController extends Controller
     public function store(PhoneRequest $request)
     {
         $data            = $request->validated();
-        $data['user_id'] = auth()->id();
+        $data['dormitory_number'] = auth()->user()->dormitory_number;
         Phone::query()->create($data);
         return redirect()->route('phones.index')->with('status', 'Запись добавлена');
     }

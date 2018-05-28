@@ -1,9 +1,6 @@
 <?php
 
-Route::get('/', function () {
-    $tasks = \App\Task::query()->get();
-    return view('layouts.app',compact('tasks'));});
-
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/login','LoginController@index')->name('login');
 Route::post('/login', 'LoginController@login');

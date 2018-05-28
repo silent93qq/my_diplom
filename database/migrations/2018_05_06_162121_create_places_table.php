@@ -14,9 +14,18 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->increments('id')->index();
+            $table->increments('id')
+                  ->index();
+            $table->integer('floor');
             $table->string('number');
+            $table->string('type');
             $table->integer('count');
+            $table->integer('busy')
+                  ->default(0);
+            $table->integer('dormitory_number')
+                  ->references('dormitory_number')
+                  ->on('users')
+                  ->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

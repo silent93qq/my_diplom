@@ -5,23 +5,24 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Cписок дел</h4>
+                <h4 class="card-title">Комнаты</h4>
                 <button data-toggle="modal" data-target="#responsive-modal" class="btn waves-effect waves-light btn-danger pull-right">Добавить</button>
                 <br>
                 <br>
                 <div class="table-responsive">
-                    @forelse($tasks as $task)
+                    @forelse($places as $place)
                         <div class="card">
                             <div class="card-body collapse show">
-                                <p class="card-title">{{$task->date}}&emsp;{{$task->time}}</p>
-                                <h4 class="card-text">{{$task->text}}</h4>
+                                <p class="card-title">Этаж: {{$place->floor}}</p>
+                                <h4 class="card-text">Комната: {{$place->number}}&emsp;Количество мест: {{$place->count}}&emsp;Свободно: </h4>
+                                <h4 class="card-text">Тип: {{$place->type}}</h4>
                             </div>
                         </div>
                     @empty
                         <p>Записей не найдено..</p>
                     @endforelse
                     <div class="text-center">
-                        {{ $tasks->appends(request()->all())->links() }}
+                        {{ $places->appends(request()->all())->links() }}
                     </div>
                 </div>
             </div>
@@ -35,22 +36,29 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">Добавление записи</h4>
+                        <h4 class="modal-title">Добавить комнату</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('tasks.store') }}" method="POST">
+                        <form action="{{ route('places.store') }}" method="POST">
                             {{csrf_field()}}
                             <div class="form-group">
-                                <label for="text" class="control-label">Текст:</label>
-                                <input type="text" name="text" id="text" class="form-control">
+                                <label for="floor" class="control-label">Этаж:</label>
+                                <input type="text" name="floor" id="floor" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="date" class="control-label">Дата:</label>
-                                <input type="date" value="<?php echo date("Y-m-d"); ?>" id="date" name="date" class="form-control" placeholder="dd-mm-yyyy">
+                                <label for="number" class="control-label">Комната:</label>
+                                <input type="text" name="number" id="number" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="time" class="control-label">Время:</label>
-                                <input type="time" class="form-control" name="time" id="time" placeholder="Check time" data-dtp="dtp_lDgXK">
+                                <label for="count" class="control-label">Количество мест:</label>
+                                <input type="text" name="count" id="count" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Тип:</label>
+                                <select class="form-control custom-select" name="type" id="type" data-placeholder="chose_course" tabindex="1">
+                                    <option value="Общий">Общий</option>
+                                    <option value="Гостевой">Гостевой</option>
+                                </select>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Отмена</button>

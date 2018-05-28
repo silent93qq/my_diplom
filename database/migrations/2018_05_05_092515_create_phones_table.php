@@ -20,9 +20,7 @@ class CreatePhonesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->bigInteger('number');
-            $table->integer('user_id')->index()->unsigned();
-            $table->foreign('user_id')
-                ->references('id')->on('users')
+            $table->integer('dormitory_number') ->references('dormitory_number')->on('users')
                 ->onDelete('cascade');
             $table->timestamps();
         });

@@ -181,8 +181,14 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="control-label">Номер комнаты</label>
-                                                <input type="text" name="place" id="place" value="1" id="firstName" class="form-control" placeholder="">
+                                                <label class="control-label">Поселить</label>
+
+                                                <select class="form-control custom-select" name="place" id="place" data-placeholder="chose_place" tabindex="1">
+                                                    @foreach($places as $place)
+                                                    <option value="{{$place->id}}">Этаж: {{$place->floor}} Комната: {{$place->number}} Мест: {{$place->count}} Свободно: {{$place->busy}} Тип: {{$place->type}}</option>
+                                                    @endforeach
+                                                </select>
+
                                             </div>
                                         </div>
                                         <!--/span-->

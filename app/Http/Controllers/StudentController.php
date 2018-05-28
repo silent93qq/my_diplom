@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\HistoryStudent;
 use App\Http\Requests\StudentRequest;
+use App\Place;
 use App\Student;
 use App\Task;
-use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -14,12 +14,13 @@ class StudentController extends Controller
    {
     $students = Student::query()->get();
     $tasks = Task::query()->get();
-    return view('students.index', compact('students','tasks'));
+    $places = Place::query()->whereColumn('count','>','busy')
+                           ->get();
+    return view('students.index', compact('students','tasks','places'));
    }
 
    public function show()
    {
-
    }
 
    public function create()
@@ -30,15 +31,22 @@ class StudentController extends Controller
 
    public function store(StudentRequest $request)
    {
-       Student::query()->create($request->validated());
+      $students = Student::query()->create($request->validated());
+      $place = Place::find($request->get('place'));
 
        HistoryStudent::query()->create([
            'name' => $request->name,
            'surname' => $request->surname,
            'patronymic' => $request->patronymic,
-           'place' => $request->place,
+           'place' => $place->number,
            'status' => 'Поселен'
        ]);
+
+       $students->places()
+                ->attach($place);
+
+       Place::query()->where('id',$place->id)
+                     ->increment('busy');
 
        return redirect()->route('students.index')
                         ->with('status', 'Студент успешно внесен в базу');
@@ -60,6 +68,8 @@ class StudentController extends Controller
     public function destroy($id)
     {
        $student = Student::find($id);
+       $place = Place::find($student->place);
+
        HistoryStudent::query()->create([
            'name' => $student->name,
            'surname' => $student->surname,
@@ -67,7 +77,15 @@ class StudentController extends Controller
            'place' => $student->place,
            'status' => 'Выселен'
        ]);
+
+        Place::query()->where('id',$place->id)
+                      ->decrement('busy');
+
+        $student->places()
+                ->detach($place);
+
        $student->delete();
+
        session()->flash('status', 'Студент выселен');
        return redirect()->back();
    }

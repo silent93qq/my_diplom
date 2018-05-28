@@ -33,11 +33,9 @@
 </div>
 <!-- Main wrapper - style you can find in pages.scss -->
 <section id="wrapper">
-    <div class="login-register" style="background-image:url(../images/background/back.jpg);">
+    <div class="login-register" style="background-image:url(../images/background/fat.jpg);">
         <div class="login-box card">
             <div class="card-body">
-
-
                 <form class="form-horizontal form-material"  method="POST" action="{{ route('login') }}">
                     @csrf
                     <h4>Авторизация</h4>
